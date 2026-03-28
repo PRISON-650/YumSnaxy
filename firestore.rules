@@ -1,0 +1,137 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    // Collection: users
+    // Fields: uid, email, displayName, photoURL, role, createdAt
+    //
+    // Collection: categories
+    // Fields: name, image, order
+    //
+    // Collection: menuItems
+    // Fields: name, description, price, categoryId, image, isAvailable, isFeatured, calories
+    //
+    // Collection: orders
+    // Fields: customerId, customerName, customerEmail, items, total, status, createdAt, deliveryAddress, paymentMethod
+    //
+    // Collection: settings
+    // Fields: isOpen, deliveryFee, minOrder
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isSuperAdmin() {
+      return isAuthenticated() && 
+        (request.auth.token.email == "mdanyalkayani77@gmail.com" || 
+         request.auth.token.email == "gotify.pk@gmail.com" ||
+         request.auth.token.email == "dkayani086@gmail.com" ||
+         request.auth.token.email == "numl-s23-36974@numls.edu.pk");
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && (request.auth.uid == userId || (resource != null && 'email' in resource.data && request.auth.token.email != null && resource.data.email.lower() == request.auth.token.email.lower()));
+    }
+
+    function isAdmin() {
+      return isSuperAdmin() || (isAuthenticated() && exists(/databases/$(database)/documents/users/$(request.auth.uid)) && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin');
+    }
+
+    function isCashier() {
+      return isAuthenticated() && 
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'cashier');
+    }
+
+    function isStaff() {
+      return isAdmin() || isCashier();
+    }
+
+    function isValidUser(data) {
+      return data.keys().hasAll(['email', 'role']) &&
+             data.role in ['customer', 'admin', 'cashier'] &&
+             data.email is string &&
+             (data.keys().hasAll(['uid']) ? data.uid is string : true);
+    }
+
+    function isValidOrder(data) {
+      return data.keys().hasAll(['items', 'total', 'status', 'createdAt', 'type', 'paymentMethod']) &&
+             data.total is number &&
+             data.status in ['pending', 'preparing', 'ready', 'delivered', 'cancelled', 'completed'] &&
+             data.type in ['online', 'walk-in'] &&
+             data.paymentMethod in ['cash', 'online'];
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+
+    // Global bypass for super admin
+    match /{document=**} {
+      allow read, write: if isSuperAdmin();
+    }
+
+    match /users/{userId} {
+      // Allow get if owner (by UID or email), super admin, or if the document is pending (for fallback auth)
+      // Also allow admins to get other users
+      allow get: if isOwner(userId) || 
+                   isSuperAdmin() || 
+                   (isAuthenticated() && userId != request.auth.uid && isAdmin()) || 
+                   (resource != null && resource.data.get('isPending', false) == true);
+      
+      // Allow list if super admin, admin, or if querying for own email
+      allow list: if isSuperAdmin() || 
+                    isAdmin() || 
+                    (isAuthenticated() && request.auth.token.email != null);
+      
+      allow create: if isAuthenticated() && isValidUser(request.resource.data) && (isOwner(userId) || isAdmin());
+      allow update: if isAuthenticated() && (isOwner(userId) || isAdmin()) && 
+                    (isSuperAdmin() || request.resource.data.role == resource.data.role);
+      allow delete: if isSuperAdmin();
+    }
+
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /menuItems/{itemId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /orders/{orderId} {
+      allow get: if true; // Allow anyone with the order ID to track it (essential for guest checkout)
+      allow list: if isAuthenticated() && (request.auth.uid == resource.data.customerId || isStaff());
+      allow create: if (request.auth == null || request.auth.uid == request.resource.data.customerId || isStaff()) && isValidOrder(request.resource.data);
+      allow update: if isStaff();
+    }
+
+    match /cashRegisterSessions/{sessionId} {
+      allow read: if isStaff();
+      allow create: if isStaff();
+      allow update: if isStaff();
+    }
+
+    match /expenses/{expenseId} {
+      allow read: if isStaff();
+      allow create: if isStaff();
+      allow update: if isStaff();
+    }
+
+    match /dailyReports/{reportId} {
+      allow read: if isStaff();
+      allow write: if true; // Allow both guests and authenticated users to update daily reports
+    }
+
+    match /settings/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}

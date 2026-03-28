@@ -1,0 +1,7 @@
+{
+  "name": "Remix: Yum Snaxy",
+  "description": "A high-converting fast-food ordering platform with customer interface, real-time order tracking, and restaurant management dashboard.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
