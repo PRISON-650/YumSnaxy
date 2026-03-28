@@ -1,10 +1,9 @@
 {
-  "projectId": "gen-lang-client-0990897718",
-  "appId": "1:367212205097:web:d43843d8207be3d574b838",
-  "apiKey": "AIzaSyAhf1LRkkQxOmcsTNuGxSHyrNO2jBaAI0s",
-  "authDomain": "gen-lang-client-0990897718.firebaseapp.com",
-  "firestoreDatabaseId": "ai-studio-0c93ab88-7fe1-4005-bf76-c78152193dbc",
-  "storageBucket": "gen-lang-client-0990897718.firebasestorage.app",
-  "messagingSenderId": "367212205097",
-  "measurementId": ""
+  "projectId": "yumsnaxy",
+  "appId": "1:65748859195:web:fd25a6124ef817c83c1f1e",
+  "apiKey": "AIzaSyAIyQn6gE0IjSOn0bwCpRf2Ofx07aZOOeI",
+  "authDomain": "yumsnaxy.firebaseapp.com",
+  "storageBucket": "yumsnaxy.firebasestorage.app",
+  "messagingSenderId": "65748859195",
+  "measurementId": "G-X64F87S1MR"
 }
