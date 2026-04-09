@@ -169,14 +169,14 @@ export default function Checkout() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
-                  className="bg-white p-8 md:p-12 rounded-[3rem] border border-neutral-100 shadow-xl space-y-8"
+                  className="bg-white p-5 md:p-12 rounded-2xl md:rounded-[3rem] border border-neutral-100 shadow-xl space-y-6 md:space-y-8"
                 >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-orange-50 rounded-2xl flex items-center justify-center">
-                        <MapPin className="w-6 h-6 text-orange-600" />
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                    <div className="flex items-center gap-3 md:gap-4">
+                      <div className="w-10 h-10 md:w-12 md:h-12 bg-orange-50 rounded-2xl flex items-center justify-center flex-shrink-0">
+                        <MapPin className="w-5 h-5 md:w-6 md:h-6 text-orange-600" />
                       </div>
-                      <h2 className="text-3xl font-black tracking-tighter uppercase">Delivery Details</h2>
+                      <h2 className="text-xl md:text-3xl font-black tracking-tighter uppercase">Delivery Details</h2>
                     </div>
                     <button
                       type="button"
@@ -200,7 +200,7 @@ export default function Checkout() {
                           value={formData.address}
                           onChange={handleInputChange}
                           placeholder="House #, Street Name, Area, Landmark..."
-                          className="w-full px-6 py-5 bg-neutral-50 border-2 border-neutral-50 rounded-3xl focus:outline-none focus:ring-4 focus:ring-orange-600/10 focus:border-orange-600 transition-all text-lg font-medium resize-none"
+                          className="w-full px-4 md:px-6 py-3 md:py-5 bg-neutral-50 border-2 border-neutral-50 rounded-2xl md:rounded-3xl focus:outline-none focus:ring-4 focus:ring-orange-600/10 focus:border-orange-600 transition-all text-base md:text-lg font-medium resize-none"
                         />
                       </div>
                     </div>
