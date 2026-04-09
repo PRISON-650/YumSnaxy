@@ -138,13 +138,13 @@ export default function Dashboard() {
   if (loading) return <div className="p-8">Loading dashboard...</div>;
 
   return (
-    <div className="p-8 space-y-8">
-      <div className="flex justify-between items-end">
+    <div className="p-4 sm:p-8 space-y-6 sm:space-y-8">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-3 sm:gap-4">
         <div>
-          <h1 className="text-4xl font-black tracking-tighter">DASHBOARD</h1>
-          <p className="text-neutral-500">Welcome back, Admin. Here's what's happening today.</p>
+          <h1 className="text-2xl sm:text-4xl font-black tracking-tighter">DASHBOARD</h1>
+          <p className="text-neutral-500 text-sm sm:text-base">Welcome back, Admin. Here's what's happening today.</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           {isSuperAdmin && (
             <button 
               onClick={handleSeedData}
@@ -196,7 +196,7 @@ export default function Dashboard() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Revenue Chart */}
-        <div className="lg:col-span-2 bg-white p-8 rounded-[3rem] border border-neutral-100 shadow-sm space-y-8">
+        <div className="lg:col-span-2 bg-white p-5 sm:p-8 rounded-2xl sm:rounded-[3rem] border border-neutral-100 shadow-sm space-y-6 sm:space-y-8">
           <div className="flex justify-between items-center">
             <h2 className="text-xl font-bold">Revenue Overview</h2>
             <select className="bg-neutral-50 border border-neutral-100 rounded-xl px-3 py-1 text-sm font-bold">
@@ -221,7 +221,7 @@ export default function Dashboard() {
         </div>
 
         {/* Recent Orders */}
-        <div className="bg-white p-8 rounded-[3rem] border border-neutral-100 shadow-sm space-y-8">
+        <div className="bg-white p-5 sm:p-8 rounded-2xl sm:rounded-[3rem] border border-neutral-100 shadow-sm space-y-6 sm:space-y-8">
           <h2 className="text-xl font-bold">Recent Orders</h2>
           <div className="space-y-6">
             {orders.slice(0, 5).map(order => (
