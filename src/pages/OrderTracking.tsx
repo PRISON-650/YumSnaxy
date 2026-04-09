@@ -48,7 +48,7 @@ export default function OrderTracking() {
       </div>
 
       {/* Status Timeline */}
-      <div className="bg-white p-8 md:p-12 rounded-[3rem] border border-neutral-100 shadow-sm">
+      <div className="bg-white p-5 sm:p-8 md:p-12 rounded-2xl sm:rounded-[3rem] border border-neutral-100 shadow-sm">
         <div className="relative flex flex-col md:flex-row justify-between gap-8">
           {/* Progress Line */}
           <div className="absolute left-6 md:left-0 md:top-6 md:right-0 h-full md:h-1 w-1 md:w-full bg-neutral-100 z-0">
@@ -85,9 +85,9 @@ export default function OrderTracking() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
         {/* Order Details */}
-        <div className="bg-white p-8 rounded-[2.5rem] border border-neutral-100 shadow-sm space-y-6">
+        <div className="bg-white p-5 sm:p-8 rounded-2xl sm:rounded-[2.5rem] border border-neutral-100 shadow-sm space-y-6">
           <h2 className="text-xl font-bold flex items-center gap-2">
             <ShoppingBag className="w-5 h-5 text-orange-600" />
             Order Details
@@ -110,7 +110,7 @@ export default function OrderTracking() {
         </div>
 
         {/* Delivery Info */}
-        <div className="bg-white p-8 rounded-[2.5rem] border border-neutral-100 shadow-sm space-y-6">
+        <div className="bg-white p-5 sm:p-8 rounded-2xl sm:rounded-[2.5rem] border border-neutral-100 shadow-sm space-y-6">
           <h2 className="text-xl font-bold flex items-center gap-2">
             <Truck className="w-5 h-5 text-orange-600" />
             Delivery Information
