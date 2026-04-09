@@ -428,7 +428,7 @@ export default function AdminReports() {
   if (loading) return <div className="p-8">Loading reports...</div>;
 
   return (
-    <div className="p-8 space-y-8">
+    <div className="p-4 sm:p-8 space-y-6 sm:space-y-8">
       <AnimatePresence mode="wait">
         {!selectedReport ? (
           <motion.div 
@@ -436,12 +436,12 @@ export default function AdminReports() {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 20 }}
-            className="space-y-8"
+            className="space-y-6 sm:space-y-8"
           >
-            <div className="flex justify-between items-end">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-3">
               <div>
-                <h1 className="text-4xl font-black tracking-tighter">ACCOUNTING BOOKS</h1>
-                <p className="text-neutral-500">View and manage historical daily reports and session details.</p>
+                <h1 className="text-2xl sm:text-4xl font-black tracking-tighter">ACCOUNTING BOOKS</h1>
+                <p className="text-neutral-500 text-sm sm:text-base">View and manage historical daily reports and session details.</p>
               </div>
               
               <div className="flex gap-4 items-center">
