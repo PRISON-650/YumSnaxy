@@ -17,7 +17,7 @@ import { toast } from 'sonner';
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  login: () => Promise<void>;
+  login: () => Promise<boolean>;
   loginWithEmail: (email: string, pass: string) => Promise<void>;
   signUp: (email: string, pass: string, displayName: string) => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
@@ -79,13 +79,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => unsubscribe();
   }, []);
 
-  const login = async () => {
-    if (authInProgress) return;
-    setAuthInProgress(true);
-    try {
-      const provider = new GoogleAuthProvider();
-      await signInWithPopup(auth, provider);
-      toast.success('Successfully logged in!');
+  const login = async (): Promise<boolean> => { 
+      if (authInProgress) return false; 
+      setAuthInProgress(true); 
+  try { 
+    const provider = new GoogleAuthProvider(); 
+    await signInWithPopup(auth, provider); 
+    toast.success('Successfully logged in!'); 
+    return true;
     } catch (error: any) {
       console.error('Login error:', error);
       if (error.code === 'auth/popup-blocked') {
@@ -99,6 +100,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       } else {
         toast.error('Failed to log in. Please try again.');
       }
+      return false; 
     } finally {
       setAuthInProgress(false);
     }
@@ -129,6 +131,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         errorMessage = 'Please enter a valid email address.';
       } else if (e.code === 'auth/user-not-found') {
         errorMessage = 'No account found with this email. Please sign up first.';
+      }else if (e.code === 'auth/wrong-password' || e.code === 'auth/invalid-credential') { 
+      errorMessage = 'Invalid email or password. Please double-check your credentials.'; 
       }
       
       throw new Error(errorMessage);
