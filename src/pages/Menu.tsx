@@ -55,10 +55,10 @@ export default function Menu() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-12 space-y-12">
       {/* Header & Search */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-8">
         <div className="space-y-2">
           <h1 className="text-3xl sm:text-5xl font-black tracking-tighter">OUR MENU</h1>
-          <p className="text-neutral-500">Freshly prepared meals delivered to your doorstep</p>
+          <p className="text-neutral-500 text-sm sm:text-base">Freshly prepared meals delivered to your doorstep</p>
         </div>
         
         <div className="relative w-full md:w-96">
@@ -81,13 +81,13 @@ export default function Menu() {
 
       {/* Grid */}
       {loading ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-8"> 
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-8">
           {[...Array(8)].map((_, i) => (
             <div key={i} className="bg-white rounded-2xl sm:rounded-[2.5rem] h-48 sm:h-96 animate-pulse border border-neutral-100" />
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-8"> 
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-8">
           {filteredItems.map((item, idx) => (
             <MenuItemCard 
               key={item.id} 
