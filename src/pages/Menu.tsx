@@ -57,7 +57,7 @@ export default function Menu() {
       {/* Header & Search */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
         <div className="space-y-2">
-          <h1 className="text-5xl font-black tracking-tighter">OUR MENU</h1>
+          <h1 className="text-3xl sm:text-5xl font-black tracking-tighter">OUR MENU</h1>
           <p className="text-neutral-500">Freshly prepared meals delivered to your doorstep</p>
         </div>
         
@@ -81,13 +81,13 @@ export default function Menu() {
 
       {/* Grid */}
       {loading ? (
-        <div className="grid grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-8"> 
           {[...Array(8)].map((_, i) => (
-            <div key={i} className="bg-white rounded-2xl sm:rounded-[2.5rem] h-32 sm:h-96 animate-pulse border border-neutral-100" />
+            <div key={i} className="bg-white rounded-2xl sm:rounded-[2.5rem] h-48 sm:h-96 animate-pulse border border-neutral-100" />
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-8"> 
           {filteredItems.map((item, idx) => (
             <MenuItemCard 
               key={item.id} 
