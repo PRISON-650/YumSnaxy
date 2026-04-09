@@ -83,11 +83,11 @@ export default function AdminSpecials() {
   }
 
   return (
-    <div className="p-8 space-y-8">
+    <div className="p-4 sm:p-8 space-y-6 sm:space-y-8">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
         <div>
-          <h1 className="text-4xl font-black tracking-tighter">SPECIALS & DEALS</h1>
-          <p className="text-neutral-500">Manage your weekly specials, featured items, and discounted deals.</p>
+          <h1 className="text-2xl sm:text-4xl font-black tracking-tighter">SPECIALS & DEALS</h1>
+          <p className="text-neutral-500 text-sm sm:text-base">Manage your weekly specials, featured items, and discounted deals.</p>
         </div>
         
         <div className="flex flex-wrap gap-3 w-full md:w-auto">
