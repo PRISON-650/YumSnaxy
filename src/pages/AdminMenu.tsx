@@ -269,13 +269,13 @@ export default function AdminMenu() {
   });
 
   return (
-    <div className="p-8 space-y-8">
-      <div className="flex justify-between items-end">
+    <div className="p-4 sm:p-8 space-y-6 sm:space-y-8">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-3">
         <div>
-          <h1 className="text-4xl font-black tracking-tighter">MENU MANAGEMENT</h1>
-          <p className="text-neutral-500">Add, edit, or remove items from your menu.</p>
+          <h1 className="text-2xl sm:text-4xl font-black tracking-tighter">MENU MANAGEMENT</h1>
+          <p className="text-neutral-500 text-sm sm:text-base">Add, edit, or remove items from your menu.</p>
         </div>
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-2 sm:gap-4">
           <button
             onClick={handleSeedData}
             disabled={loading}
@@ -345,8 +345,9 @@ export default function AdminMenu() {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-[2.5rem] border border-neutral-100 shadow-sm overflow-hidden">
-        <table className="w-full text-left">
+      <div className="bg-white rounded-2xl sm:rounded-[2.5rem] border border-neutral-100 shadow-sm overflow-hidden">
+        <div className="overflow-x-auto">
+        <table className="w-full text-left min-w-[640px]">
           <thead className="bg-neutral-50 border-b border-neutral-100">
             <tr>
               <th className="px-8 py-6 text-xs font-black uppercase tracking-widest text-neutral-400">Item</th>
@@ -425,6 +426,7 @@ export default function AdminMenu() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
 
       {/* Modal */}
@@ -434,9 +436,9 @@ export default function AdminMenu() {
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            className="relative bg-white w-full max-w-2xl rounded-[3rem] overflow-hidden shadow-2xl p-12"
+            className="relative bg-white w-full max-w-2xl rounded-2xl sm:rounded-[3rem] overflow-hidden shadow-2xl p-5 sm:p-12 max-h-[90vh] overflow-y-auto"
           >
-            <h2 className="text-3xl font-black tracking-tighter mb-8">
+            <h2 className="text-2xl sm:text-3xl font-black tracking-tighter mb-5 sm:mb-8">
               {editingItem ? 'EDIT ITEM' : 'ADD NEW ITEM'}
             </h2>
 
@@ -574,10 +576,10 @@ export default function AdminMenu() {
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            className="relative bg-white w-full max-w-xl rounded-[3rem] overflow-hidden shadow-2xl p-12"
+            className="relative bg-white w-full max-w-xl rounded-2xl sm:rounded-[3rem] overflow-hidden shadow-2xl p-5 sm:p-12 max-h-[90vh] overflow-y-auto"
           >
             <div className="flex justify-between items-center mb-8">
-              <h2 className="text-3xl font-black tracking-tighter">MANAGE CATEGORIES</h2>
+              <h2 className="text-2xl sm:text-3xl font-black tracking-tighter">MANAGE CATEGORIES</h2>
               <button onClick={() => setIsCategoryModalOpen(false)} className="p-2 hover:bg-neutral-100 rounded-full transition-colors">
                 <X className="w-6 h-6" />
               </button>
