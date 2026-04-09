@@ -42,7 +42,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({ item, categoryName, onSelec
       onClick={() => onSelect(item)}
       className="bg-white rounded-2xl sm:rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all group border border-neutral-100 cursor-pointer h-full flex flex-col"
     >
-      <div className="relative h-24 sm:h-56 overflow-hidden">
+      <div className="relative h-36 sm:h-56 overflow-hidden"> 
         <img
           src={item.image}
           alt={item.name}
