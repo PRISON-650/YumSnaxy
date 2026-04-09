@@ -67,19 +67,19 @@ export default function AdminOrders() {
   const filteredOrders = filter === 'all' ? orders : orders.filter(o => o.status === filter);
 
   return (
-    <div className="p-8 space-y-8">
-      <div className="flex justify-between items-end">
+    <div className="p-4 sm:p-8 space-y-6 sm:space-y-8">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-3">
         <div>
-          <h1 className="text-4xl font-black tracking-tighter">ORDER QUEUE</h1>
-          <p className="text-neutral-500">Manage real-time orders and update their status.</p>
+          <h1 className="text-2xl sm:text-4xl font-black tracking-tighter">ORDER QUEUE</h1>
+          <p className="text-neutral-500 text-sm sm:text-base">Manage real-time orders and update their status.</p>
         </div>
-        <div className="flex items-center gap-2 bg-white p-1 rounded-2xl border border-neutral-100">
+        <div className="flex items-center gap-2 bg-white p-1 rounded-2xl border border-neutral-100 overflow-x-auto scrollbar-hide">
           {['all', 'pending', 'preparing', 'ready', 'delivered', 'completed'].map(f => (
             <button
               key={f}
               onClick={() => setFilter(f)}
               className={cn(
-                "px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all",
+                "px-3 sm:px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all whitespace-nowrap",
                 filter === f ? "bg-neutral-900 text-white" : "text-neutral-400 hover:text-neutral-900"
               )}
             >
@@ -91,21 +91,21 @@ export default function AdminOrders() {
 
       <div className="grid grid-cols-1 gap-6">
         {filteredOrders.map(order => (
-          <div key={order.id} className="bg-white rounded-[2.5rem] border border-neutral-100 shadow-sm overflow-hidden flex flex-col lg:flex-row">
+          <div key={order.id} className="bg-white rounded-2xl sm:rounded-[2.5rem] border border-neutral-100 shadow-sm overflow-hidden flex flex-col lg:flex-row">
             {/* Status Sidebar */}
             <div className={cn(
-              "w-full lg:w-48 p-8 flex lg:flex-col items-center justify-center gap-4 text-center",
+              "w-full lg:w-48 p-4 sm:p-8 flex lg:flex-col items-center justify-center gap-3 sm:gap-4 text-center",
               STATUS_CONFIG[order.status].color
             )}>
-              {React.createElement(STATUS_CONFIG[order.status].icon, { className: "w-10 h-10" })}
+              {React.createElement(STATUS_CONFIG[order.status].icon, { className: "w-8 h-8 sm:w-10 sm:h-10" })}
               <div>
                 <span className="block text-[10px] font-black uppercase tracking-widest opacity-60">Status</span>
-                <span className="text-lg font-bold uppercase">{STATUS_CONFIG[order.status].label}</span>
+                <span className="text-base sm:text-lg font-bold uppercase">{STATUS_CONFIG[order.status].label}</span>
               </div>
             </div>
 
             {/* Order Content */}
-            <div className="flex-1 p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="flex-1 p-4 sm:p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <h3 className="text-xl font-black tracking-tight">#{order.id.slice(-6).toUpperCase()}</h3>
