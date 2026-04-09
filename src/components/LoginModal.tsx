@@ -27,28 +27,28 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
     }
   }, [user, isOpen, onClose]);
 
-  const handleGoogleLogin = async () => {
-    setIsLoading(true);
-    try {
-      await login();
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const handleGoogleLogin = async () => { 
+  setIsLoading(true); 
+  try { 
+    const success = await login(); 
+    if (success) onClose(); 
+  } finally { 
+    setIsLoading(false); 
+  } 
+};
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      if (mode === 'signin') {
-        await loginWithEmail(email, password);
-      } else {
-        if (!displayName) {
-          toast.error('Please enter your name');
-          return;
-        }
-        await signUp(email, password, displayName);
-      }
+      if (mode === 'signin') { 
+        await loginWithEmail(email, password); 
+      } else { 
+        if (!displayName) { toast.error('Please enter your name'); return; } 
+        await signUp(email, password, displayName); 
+      } 
+      // Close immediately on success — don't wait for Firestore profile load 
+       onClose(); 
     } catch (error: any) {
       // If email already in use, offer to switch to sign in
       if (error.message && (error.message.includes('already registered') || error.message.includes('email-already-in-use'))) {
@@ -89,12 +89,13 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="relative w-full max-w-md bg-white rounded-[2.5rem] shadow-2xl overflow-hidden"
+             className="relative w-full max-w-md bg-white rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl overflow-hidden" 
+
           >
-            <div className="p-8 space-y-8">
+            <div className="p-5 sm:p-8 space-y-5 sm:space-y-8"> 
               <div className="flex justify-between items-center">
                 <div className="space-y-1">
-                  <h2 className="text-3xl font-black tracking-tight uppercase">
+                  <h2 className="text-2xl sm:text-3xl font-black tracking-tight uppercase"> 
                     Staff Login
                   </h2>
                   <p className="text-xs font-bold text-orange-600 uppercase tracking-widest">
