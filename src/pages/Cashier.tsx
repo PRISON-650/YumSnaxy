@@ -86,6 +86,7 @@ export default function Cashier() {
   const [error, setError] = useState<string | null>(null);
 
   const [isClosingModalOpen, setIsClosingModalOpen] = useState(false);
+  const [mobileShowCart, setMobileShowCart] = useState(false);
   const [closingCash, setClosingCash] = useState('');
   const [isClosingSession, setIsClosingSession] = useState(false);
 
@@ -706,41 +707,41 @@ export default function Cashier() {
   return (
     <div className="h-screen bg-neutral-50 flex flex-col overflow-hidden">
       {/* Header */}
-      <header className="bg-white border-b border-neutral-200 px-6 py-4 flex justify-between items-center flex-shrink-0">
-        <div className="flex items-center gap-8">
-          <h1 className="text-2xl font-black tracking-tighter text-orange-600">SNAXY POS</h1>
-          <nav className="flex gap-1">
+      <header className="bg-white border-b border-neutral-200 px-3 sm:px-6 py-3 sm:py-4 flex justify-between items-center flex-shrink-0">
+        <div className="flex items-center gap-2 sm:gap-8">
+          <h1 className="text-lg sm:text-2xl font-black tracking-tighter text-orange-600">SNAXY POS</h1>
+          <nav className="flex gap-1 overflow-x-auto scrollbar-hide">
             {[
               { id: 'pos', label: 'New Order', icon: PlusCircle },
-              { id: 'queue', label: 'Order Queue', icon: Clock },
+              { id: 'queue', label: 'Queue', icon: Clock },
               { id: 'expenses', label: 'Expenses', icon: Banknote },
-              { id: 'report', label: 'EOD Report', icon: FileText },
+              { id: 'report', label: 'Report', icon: FileText },
             ].map(tab => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
                 className={cn(
-                  "px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2 transition-all",
+                  "px-2 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-1 sm:gap-2 transition-all whitespace-nowrap",
                   activeTab === tab.id ? "bg-orange-600 text-white shadow-lg shadow-orange-200" : "text-neutral-500 hover:bg-neutral-100"
                 )}
               >
                 <tab.icon className="w-4 h-4" />
-                {tab.label}
+                <span className="hidden sm:inline">{tab.label}</span>
               </button>
             ))}
           </nav>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           {(isAdmin || isSuperAdmin) && (
             <button 
               onClick={() => navigate('/admin')}
-              className="px-4 py-2 text-neutral-500 hover:bg-neutral-100 rounded-xl font-bold flex items-center gap-2 transition-all"
+              className="px-2 sm:px-4 py-2 text-neutral-500 hover:bg-neutral-100 rounded-xl font-bold flex items-center gap-1 sm:gap-2 transition-all text-xs sm:text-sm"
             >
               <ChevronLeft className="w-4 h-4" />
-              Exit to Admin
+              <span className="hidden sm:inline">Exit to Admin</span>
             </button>
           )}
-          <div className="text-right">
+          <div className="text-right hidden sm:block">
             <p className="text-xs font-bold text-neutral-400 uppercase tracking-widest">Cashier</p>
             <p className="font-bold">{session.cashierName}</p>
           </div>
@@ -754,7 +755,7 @@ export default function Cashier() {
             }}
             className="p-2 text-red-500 hover:bg-red-50 rounded-xl transition-colors"
           >
-            <LogOut className="w-6 h-6" />
+            <LogOut className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
         </div>
       </header>
@@ -762,8 +763,29 @@ export default function Cashier() {
       <main className="flex-1 flex overflow-hidden">
         {activeTab === 'pos' && (
           <>
+            {/* Mobile toggle bar */}
+            <div className="sm:hidden absolute bottom-0 left-0 right-0 z-20 bg-white border-t border-neutral-200 flex">
+              <button
+                onClick={() => setMobileShowCart(false)}
+                className={cn("flex-1 py-3 text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2 transition-all",
+                  !mobileShowCart ? "bg-orange-600 text-white" : "text-neutral-500")}
+              >
+                <PlusCircle className="w-4 h-4" /> Menu
+              </button>
+              <button
+                onClick={() => setMobileShowCart(true)}
+                className={cn("flex-1 py-3 text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2 transition-all",
+                  mobileShowCart ? "bg-orange-600 text-white" : "text-neutral-500")}
+              >
+                <ShoppingBag className="w-4 h-4" /> Cart {cart.length > 0 && `(${cart.length})`}
+              </button>
+            </div>
+
             {/* Left Panel - Menu */}
-            <div className="flex-1 flex flex-col border-r border-neutral-200 overflow-hidden bg-white">
+            <div className={cn(
+              "flex-1 flex flex-col border-r border-neutral-200 overflow-hidden bg-white pb-12 sm:pb-0",
+              mobileShowCart ? "hidden sm:flex" : "flex"
+            )}>
               <div className="p-4 border-b border-neutral-100 space-y-4">
                 <div className="relative">
                   <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
@@ -820,7 +842,10 @@ export default function Cashier() {
             </div>
 
             {/* Right Panel - Cart & Payment */}
-            <div className="w-[400px] flex flex-col bg-white overflow-hidden">
+            <div className={cn(
+              "w-full sm:w-[400px] flex flex-col bg-white overflow-hidden pb-12 sm:pb-0",
+              mobileShowCart ? "flex" : "hidden sm:flex"
+            )}>
               <div className="p-6 border-b border-neutral-100">
                 <h2 className="text-xl font-black tracking-tight flex items-center gap-2">
                   <ShoppingBag className="w-6 h-6 text-orange-600" />
@@ -938,10 +963,10 @@ export default function Cashier() {
         )}
 
         {activeTab === 'queue' && (
-          <div className="flex-1 overflow-y-auto p-8 bg-neutral-50">
-            <div className="max-w-6xl mx-auto space-y-8">
+          <div className="flex-1 overflow-y-auto p-4 sm:p-8 bg-neutral-50">
+            <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8">
               <div className="flex justify-between items-center">
-                <h2 className="text-3xl font-black tracking-tight">ORDER QUEUE</h2>
+                <h2 className="text-xl sm:text-3xl font-black tracking-tight">ORDER QUEUE</h2>
                 <div className="flex gap-2">
                   <span className="px-4 py-2 bg-white rounded-xl border border-neutral-200 text-sm font-bold flex items-center gap-2">
                     <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
