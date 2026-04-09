@@ -42,7 +42,7 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({ item, categoryName, onSelec
       onClick={() => onSelect(item)}
       className="bg-white rounded-2xl sm:rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all group border border-neutral-100 cursor-pointer h-full flex flex-col"
     >
-      <div className="relative h-36 sm:h-56 overflow-hidden"> 
+      <div className="relative h-36 sm:h-56 overflow-hidden">
         <img
           src={item.image}
           alt={item.name}
@@ -50,60 +50,60 @@ const MenuItemCard: React.FC<MenuItemCardProps> = ({ item, categoryName, onSelec
           referrerPolicy="no-referrer"
         />
         {categoryName && (
-          <div className="absolute top-1 left-1 sm:top-4 sm:left-4 bg-white/90 backdrop-blur-md px-1.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[7px] sm:text-[10px] font-black tracking-widest uppercase">
+          <div className="absolute top-2 left-2 sm:top-4 sm:left-4 bg-white/90 backdrop-blur-md px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[9px] sm:text-[10px] font-black tracking-widest uppercase">
             {categoryName}
           </div>
         )}
         {item.isWeeklySpecial && (
-          <div className="absolute top-1 left-1 sm:top-12 sm:left-4 bg-orange-600 text-white px-1.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[7px] sm:text-[10px] font-black tracking-widest uppercase shadow-lg shadow-orange-200">
+          <div className="absolute top-2 left-2 sm:top-12 sm:left-4 bg-orange-600 text-white px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[9px] sm:text-[10px] font-black tracking-widest uppercase shadow-lg shadow-orange-200">
             Weekly Special
           </div>
         )}
         {item.dealPrice && (
-          <div className="absolute top-1 left-1 sm:top-20 sm:left-4 bg-green-600 text-white px-1.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[7px] sm:text-[10px] font-black tracking-widest uppercase shadow-lg shadow-green-200">
+          <div className="absolute top-2 left-2 sm:top-20 sm:left-4 bg-green-600 text-white px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[9px] sm:text-[10px] font-black tracking-widest uppercase shadow-lg shadow-green-200">
             Hot Deal
           </div>
         )}
-        <div className="absolute top-1 right-1 sm:top-4 sm:right-4 bg-white/90 backdrop-blur-md px-1.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[8px] sm:text-xs font-bold flex items-center gap-0.5 sm:gap-1">
-          <Star className="w-2 h-2 sm:w-3 sm:h-3 text-yellow-500 fill-yellow-500" /> 4.8
+        <div className="absolute top-2 right-2 sm:top-4 sm:right-4 bg-white/90 backdrop-blur-md px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[9px] sm:text-xs font-bold flex items-center gap-0.5 sm:gap-1">
+          <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-yellow-500 fill-yellow-500" /> 4.8
         </div>
-        <div className="absolute bottom-1 right-1 sm:bottom-4 sm:right-4 bg-orange-600 text-white p-1 sm:p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+        <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 bg-orange-600 text-white p-1.5 sm:p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
           <Plus className="w-3 h-3 sm:w-5 sm:h-5" />
         </div>
       </div>
       
-      <div className="p-2 sm:p-6 space-y-1 sm:space-y-4 flex-1 flex flex-col">
+      <div className="p-3 sm:p-6 space-y-2 sm:space-y-4 flex-1 flex flex-col">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-0.5 sm:gap-1">
-          <h3 className="text-[10px] sm:text-lg font-bold leading-tight line-clamp-1">{item.name}</h3>
-          <div className="flex flex-col items-end">
+          <h3 className="text-xs sm:text-lg font-bold leading-tight line-clamp-1">{item.name}</h3>
+          <div className="flex flex-col items-start sm:items-end">
             <span className={cn(
-              "font-black text-[10px] sm:text-base whitespace-nowrap",
-              item.dealPrice ? "text-neutral-400 line-through text-[8px] sm:text-xs" : "text-orange-600"
+              "font-black text-xs sm:text-base whitespace-nowrap",
+              item.dealPrice ? "text-neutral-400 line-through text-[10px] sm:text-xs" : "text-orange-600"
             )}>
               {formatCurrency(item.price)}
             </span>
             {item.dealPrice && (
-              <span className="text-orange-600 font-black text-[10px] sm:text-base whitespace-nowrap">
+              <span className="text-orange-600 font-black text-xs sm:text-base whitespace-nowrap">
                 {formatCurrency(item.dealPrice)}
               </span>
             )}
           </div>
         </div>
-        <p className="text-neutral-500 text-[8px] sm:text-sm line-clamp-1 sm:line-clamp-2 flex-1">{item.description}</p>
+        <p className="text-neutral-500 text-[10px] sm:text-sm line-clamp-2 flex-1">{item.description}</p>
         
-        <div className="flex items-center gap-1 sm:gap-4 pt-1 sm:pt-2 relative group-item">
+        <div className="flex items-center gap-2 sm:gap-4 pt-1 sm:pt-2 relative group-item">
           <button
             onClick={handleAddToCart}
-            className="flex-1 bg-neutral-900 text-white py-1.5 sm:py-3 rounded-md sm:rounded-xl text-[9px] sm:text-base font-bold flex items-center justify-center gap-1 sm:gap-2 hover:bg-orange-600 transition-all active:scale-95 shadow-lg hover:shadow-orange-200"
+            className="flex-1 bg-neutral-900 text-white py-2 sm:py-3 rounded-lg sm:rounded-xl text-[10px] sm:text-base font-bold flex items-center justify-center gap-1 sm:gap-2 hover:bg-orange-600 transition-all active:scale-95 shadow-lg hover:shadow-orange-200"
           >
-            <ShoppingBag className="w-2.5 h-2.5 sm:w-4 sm:h-4" />
+            <ShoppingBag className="w-3 h-3 sm:w-4 sm:h-4" />
             <span className="hidden sm:inline">Add to Cart</span>
             <span className="sm:hidden">Add</span>
           </button>
           <button 
-            className="p-1.5 sm:p-3 bg-neutral-100 text-neutral-600 rounded-md sm:rounded-xl hover:bg-neutral-200 transition-colors"
+            className="p-2 sm:p-3 bg-neutral-100 text-neutral-600 rounded-lg sm:rounded-xl hover:bg-neutral-200 transition-colors"
           >
-            <Info className="w-2.5 h-2.5 sm:w-5 sm:h-5" />
+            <Info className="w-3 h-3 sm:w-5 sm:h-5" />
           </button>
         </div>
       </div>
