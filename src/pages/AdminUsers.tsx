@@ -239,10 +239,10 @@ export default function AdminUsers() {
   }
 
   return (
-    <div className="p-8 space-y-8">
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+    <div className="p-4 sm:p-8 space-y-6 sm:space-y-8">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-8">
         <div>
-          <h1 className="text-4xl font-black tracking-tighter">USER MANAGEMENT</h1>
+          <h1 className="text-2xl sm:text-4xl font-black tracking-tighter">USER MANAGEMENT</h1>
           <p className="text-neutral-500">Manage user roles and permissions.</p>
         </div>
         
@@ -297,7 +297,7 @@ export default function AdminUsers() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white p-8 rounded-[2.5rem] shadow-2xl border border-neutral-100 max-w-md w-full space-y-6"
+              className="bg-white p-5 sm:p-8 rounded-2xl sm:rounded-[2.5rem] shadow-2xl border border-neutral-100 max-w-md w-full space-y-6"
             >
               <div className="flex justify-between items-center">
                 <h3 className="text-2xl font-black tracking-tight">ADD NEW USER</h3>
@@ -399,7 +399,7 @@ export default function AdminUsers() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.05 }}
-              className="bg-white p-8 rounded-[2.5rem] border border-neutral-100 shadow-sm hover:shadow-xl transition-all group relative overflow-hidden"
+              className="bg-white p-5 sm:p-8 rounded-2xl sm:rounded-[2.5rem] border border-neutral-100 shadow-sm hover:shadow-xl transition-all group relative overflow-hidden"
             >
               <div className={cn(
                 "absolute top-0 right-0 w-32 h-32 -mr-8 -mt-8 rounded-full opacity-5 transition-transform group-hover:scale-110",
@@ -498,7 +498,7 @@ export default function AdminUsers() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white p-8 rounded-[2.5rem] shadow-2xl border border-neutral-100 max-w-md w-full space-y-6"
+              className="bg-white p-5 sm:p-8 rounded-2xl sm:rounded-[2.5rem] shadow-2xl border border-neutral-100 max-w-md w-full space-y-6"
             >
               <div className="flex justify-between items-center">
                 <h3 className="text-2xl font-black tracking-tight">EDIT USER</h3>
