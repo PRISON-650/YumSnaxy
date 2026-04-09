@@ -76,7 +76,7 @@ export default function MobileMenu({ isOpen, onClose, navItems }: MobileMenuProp
               {user ? (
                 <div className="flex flex-col gap-4">
                   <div className="flex items-center gap-3 px-2">
-                    <img src={user.photoURL} alt={user.displayName} className="w-10 h-10 rounded-full border border-neutral-200" />
+                    <img src={user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || user.email)}&background=ea580c&color=fff`} alt={user.displayName} className="w-10 h-10 rounded-full border border-neutral-200" />
                     <div className="flex-1 min-w-0">
                       <p className="font-bold text-neutral-900 truncate">{user.displayName}</p>
                       <p className="text-sm text-neutral-500 truncate">{user.email}</p>
