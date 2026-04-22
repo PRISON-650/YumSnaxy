@@ -55,6 +55,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'motion/react';
+import ConfirmationModal from '../components/ConfirmationModal';
 
 export default function Cashier() {
   const { user, isAdmin, isSuperAdmin, loading: authLoading } = useAuth();
@@ -87,6 +88,10 @@ export default function Cashier() {
 
   const [isClosingModalOpen, setIsClosingModalOpen] = useState(false);
   const [mobileShowCart, setMobileShowCart] = useState(false);
+  const [cancelConfirm, setCancelConfirm] = useState<{ isOpen: boolean; order: Order | null }>({
+    isOpen: false,
+    order: null,
+  });
   const [closingCash, setClosingCash] = useState('');
   const [isClosingSession, setIsClosingSession] = useState(false);
 
@@ -1067,7 +1072,7 @@ export default function Cashier() {
                             Edit Order
                           </button>
                           <button 
-                            onClick={() => handleUpdateStatus(order, 'cancelled')}
+                            onClick={() => setCancelConfirm({ isOpen: true, order })}
                             className="py-2 text-red-500 text-[10px] font-black uppercase tracking-widest hover:bg-red-50 rounded-xl transition-colors"
                           >
                             Cancel Order
@@ -1078,9 +1083,79 @@ export default function Cashier() {
                   </motion.div>
                 ))}
               </div>
+
+              {/* Completed Orders Section */}
+              {orders.filter(o => o.status === 'completed' || o.status === 'cancelled').length > 0 && (
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3">
+                    <div className="h-px flex-1 bg-neutral-200" />
+                    <span className="text-xs font-black uppercase tracking-widest text-neutral-400 px-2">
+                      Completed &amp; Cancelled
+                    </span>
+                    <div className="h-px flex-1 bg-neutral-200" />
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                    {orders.filter(o => o.status === 'completed' || o.status === 'cancelled').map(order => (
+                      <div
+                        key={order.id}
+                        className="bg-white rounded-2xl border border-neutral-100 opacity-60 overflow-hidden flex flex-col"
+                      >
+                        <div className="p-4 border-b border-neutral-100 flex justify-between items-center">
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <h3 className="font-black">#{order.id.slice(-6).toUpperCase()}</h3>
+                              <span className={cn(
+                                "px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest",
+                                order.type === 'walk-in' ? "bg-blue-100 text-blue-600" : "bg-purple-100 text-purple-600"
+                              )}>
+                                {order.type}
+                              </span>
+                            </div>
+                            <p className="text-xs text-neutral-400 font-bold">
+                              {new Date(order.createdAt?.toDate?.() || order.createdAt).toLocaleTimeString()}
+                            </p>
+                          </div>
+                          <span className={cn(
+                            "px-3 py-1 rounded-xl text-[10px] font-black uppercase tracking-widest",
+                            order.status === 'completed' ? "bg-green-100 text-green-600" : "bg-red-100 text-red-600"
+                          )}>
+                            {order.status}
+                          </span>
+                        </div>
+                        <div className="p-4 space-y-1">
+                          {order.items.map((item, idx) => (
+                            <div key={idx} className="flex justify-between text-sm">
+                              <span className="text-neutral-500">{item.quantity}x {item.name}</span>
+                              <span className="text-neutral-400">{formatCurrency(item.price * item.quantity)}</span>
+                            </div>
+                          ))}
+                          <div className="pt-2 border-t border-neutral-100 flex justify-between font-black text-sm">
+                            <span>Total</span>
+                            <span className="text-orange-600">{formatCurrency(order.total)}</span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}
+
+        {/* Cancel Order Confirmation Modal */}
+        <ConfirmationModal
+          isOpen={cancelConfirm.isOpen}
+          onClose={() => setCancelConfirm({ isOpen: false, order: null })}
+          onConfirm={() => {
+            if (cancelConfirm.order) handleUpdateStatus(cancelConfirm.order, 'cancelled');
+          }}
+          title="Cancel Order?"
+          message={`Are you sure you want to cancel order #${cancelConfirm.order?.id.slice(-6).toUpperCase() ?? ''}? This cannot be undone.`}
+          confirmText="Yes, Cancel Order"
+          cancelText="Keep Order"
+          variant="danger"
+        />
 
         {activeTab === 'expenses' && (
           <div className="flex-1 overflow-y-auto p-8 bg-neutral-50">
