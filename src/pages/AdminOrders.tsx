@@ -6,6 +6,7 @@ import { formatCurrency, cn } from '../lib/utils';
 import { Clock, CheckCircle2, Package, Truck, XCircle, ChevronRight, MapPin, Phone, ShoppingBag } from 'lucide-react';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
+import ConfirmationModal from '../components/ConfirmationModal';
 
 const STATUS_CONFIG: Record<OrderStatus, { label: string; color: string; icon: any }> = {
   pending: { label: 'New Order', color: 'bg-orange-100 text-orange-600', icon: Clock },
@@ -21,6 +22,9 @@ export default function AdminOrders() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<string>('all');
+  const [cancelConfirm, setCancelConfirm] = useState<{ isOpen: boolean; orderId: string; orderLabel: string }>({
+    isOpen: false, orderId: '', orderLabel: ''
+  });
 
   useEffect(() => {
     const q = query(collection(db, 'orders'), orderBy('createdAt', 'desc'));
@@ -192,7 +196,7 @@ export default function AdminOrders() {
                         Edit Order
                       </button>
                       <button
-                        onClick={() => updateStatus(order.id, 'cancelled')}
+                        onClick={() => setCancelConfirm({ isOpen: true, orderId: order.id, orderLabel: order.id.slice(-6).toUpperCase() })}
                         className="border border-red-100 text-red-500 py-3 rounded-xl font-bold text-sm hover:bg-red-50 transition-all"
                       >
                         Cancel Order
@@ -205,6 +209,17 @@ export default function AdminOrders() {
           </div>
         ))}
       </div>
+
+      <ConfirmationModal
+        isOpen={cancelConfirm.isOpen}
+        onClose={() => setCancelConfirm({ isOpen: false, orderId: '', orderLabel: '' })}
+        onConfirm={() => updateStatus(cancelConfirm.orderId, 'cancelled')}
+        title="Cancel Order?"
+        message={`Are you sure you want to cancel order #${cancelConfirm.orderLabel}? This cannot be undone.`}
+        confirmText="Yes, Cancel Order"
+        cancelText="Keep Order"
+        variant="danger"
+      />
     </div>
   );
 }
